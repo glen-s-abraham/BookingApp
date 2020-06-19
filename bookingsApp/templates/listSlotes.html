@@ -1,0 +1,28 @@
+<form action="{%url 'listSlotes'%}" method="get">
+	Select a date to see Availability
+	<input type="date" name="date" required>
+	<input type="submit" name="Find" value="Find">
+</form>
+<br><br><br>
+<form action="{%url 'listSlotes'%}" method="post">
+	{%csrf_token%}
+	Time Slote
+	<select name="slote" required>
+	{%for slote in slotes%}
+		<option value={{slote.id}}>{{slote}}</option>
+
+	{%endfor%}	
+	</select>
+	Book On
+	<input type="date" name="bdate" value="{{date}}" required readonly>
+	Name
+	<input type="text" name="name" required>
+	Contact
+	<input type="text" name="contact" required>
+	<input type="submit" name="Book" value="Book">
+
+
+</form>
+{%if booking_id%}
+<h5>Youre Booking id is:{{booking_id}}</h5>
+{%endif%}
