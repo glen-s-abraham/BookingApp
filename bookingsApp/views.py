@@ -1,19 +1,31 @@
 from django.shortcuts import render,redirect
-
-from .models import Slotes,Bookings
+import datetime 
+import calendar
+from .models import Slotes,Bookings,Days,DaySchedule,ScheduleSlotes
 
 #redirect and validations pending
 
 def listSlotes(request):
-	slotes=Slotes.objects.all()
+	slotes=[]
 	freeSlotes=[]
 	context={}
 	if request.method=='GET':
 		freeSlotes=[]
 		if 'Find' in request.GET:
 			date=request.GET['date']
+			
+			day = datetime.datetime.strptime(date,'%Y-%m-%d').weekday()
 			bookedSlotes=Bookings.objects.filter(date=date)
+			
+			dayid=Days.objects.get(day=calendar.day_name[day])
+			
+			schedule=DaySchedule.objects.get(day=dayid)
 
+			schedule=ScheduleSlotes.objects.filter(schedule=schedule.schedule)
+			for si in schedule:
+				print(si.slote)
+				slotes.append(si.slote)
+			print(slotes)
 			if bookedSlotes:
 				
 				bookedIds=[]
@@ -23,9 +35,9 @@ def listSlotes(request):
 
 				for s in slotes:
 					if s.id in bookedIds:
-						print(s.id, 'is booked')	
+						print(s, 'is booked')	
 					else:
-						print(s.id, 'is free')		
+						print(s, 'is free')		
 						freeSlotes.append(s)	
 			else:
 				freeSlotes=slotes;

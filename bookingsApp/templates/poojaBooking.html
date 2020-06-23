@@ -1,0 +1,22 @@
+
+
+<form method="GET">
+	<select name="pooja" required>
+		{%for pooja in poojalist%}
+		
+		<option value="{{pooja.id}}">{{pooja.name}}</option>
+		{%endfor%}
+	</select>
+	<input type="submit" name="Select">
+</form>
+<br>
+recipt
+<br>
+<form method="POST">
+{%csrf_token%}
+Customer name <input type="text" name="client" required ><br>	
+Pooja <input type="text" name="name" value="{{name}}" readonly required>	<br>	
+
+Price<input type="text" name="price" value="{{price}}" readonly required><br>	
+<input type="submit" name="Bill">
+</form>
