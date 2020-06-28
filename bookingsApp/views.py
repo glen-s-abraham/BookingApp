@@ -1,7 +1,11 @@
 from django.shortcuts import render,redirect
 import datetime 
 import calendar
+import random
+from django.core.mail import send_mail
+
 from .models import Slotes,Bookings,Days,DaySchedule,ScheduleSlotes
+
 
 #redirect and validations pending
 
@@ -15,7 +19,7 @@ def listSlotes(request):
 			date=request.GET['date']
 			
 			day = datetime.datetime.strptime(date,'%Y-%m-%d').weekday()
-			bookedSlotes=Bookings.objects.filter(date=date)
+			bookedSlotes=Bookings.objects.filter(date=date,status='confirmed')
 			
 			dayid=Days.objects.get(day=calendar.day_name[day])
 			
@@ -51,6 +55,7 @@ def listSlotes(request):
 			name=request.POST['name']
 			bookingdate=request.POST['bdate']
 			contact=request.POST['contact']
+			otp=random.randint(1000,9999)
 			print(sloteid,bookingdate,name,contact)		
 			bookedSlote=Slotes.objects.get(pk=sloteid)
 			booking=Bookings()
@@ -58,18 +63,61 @@ def listSlotes(request):
 			booking.date=bookingdate
 			booking.name=name
 			booking.contact=contact
+			booking.otp=otp
 			booking.save()		
-			print(booking.id)	
-			return redirect('successRegistration',booking.id)
+			#sendmail to recepient
+			fromAddr='service@site.com'
+			toAdrr=[contact]
+			subject='Confirm Your booking'
+			message='your Confirmation otp is:'+str(otp)
+
+			send_mail(subject,message,fromAddr,toAdrr,fail_silently=False,)
+    
+			return redirect('confirmBooking',booking.id)
 		
 
 	
 	
 	return render(request,'listSlotes.html',context)
 
+def confirmBooking(request,id=-1):
+	msg=None
+	if id>-1:
+		if request.method=='POST':
+			if 'Confirmation' in request.POST:
+				userid=request.POST['id']
+				userotp=request.POST['otp']
+				user=Bookings.objects.get(id=userid)
+				print(userid,userotp,user.otp)
+				if int(userotp)==user.otp:
+					user.status='confirmed'
+					user.save()
+					fromAddr='service@site.com'
+					toAdrr=[user.contact]
+					subject='Booking details'
+					message='Booking name:'+str(user.name)+"Booking id:"+str(user.id)
+
+					send_mail(subject,message,fromAddr,toAdrr,fail_silently=False,)
+					return redirect('successRegistration',user.id)
+
+				else:
+					msg='wrong otp'
+					print('wrong otp')	
+
+	context={'id':id}
+	if msg:
+		context['msg']=msg				
+
+				
+	return render(request,'confirmBooking.html',context)
+
+
+	
+
 def successRegistration(request,id=-1):
 	if id>0:
-		return render(request,'successRegistration.html',{'id':id})
+		user=Bookings.objects.get(pk=id)
+		return render(request,'successRegistration.html',{'name':user.name})
 def cancelBooking(request):
 	if request.method=='POST':
 		if 'Cancel' in request.POST:
@@ -83,5 +131,6 @@ def cancelBooking(request):
 				return redirect('listSlotes')
 				
 	return render(request,'cancelBooking.html')
+
 
 

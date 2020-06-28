@@ -1,0 +1,10 @@
+{%if msg%}
+{{msg}}
+{%endif%}
+<form method="post">
+	{%csrf_token%}
+	<input type="hidden" name="id" value="{{id}}">
+	otp
+	<input type="text" name="otp" required>
+	<input type="submit" name="Confirmation">
+</form>

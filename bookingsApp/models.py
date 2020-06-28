@@ -9,6 +9,9 @@ class Bookings(models.Model):
 	date=models.DateField()
 	name=models.CharField(max_length=100)
 	contact=models.CharField(max_length=100)
+	otp=models.IntegerField() 
+	status=models.CharField(max_length=30,default='pending')
+	
 	def __str__(self):
 		return str(self.name)
 class Schedules(models.Model):
