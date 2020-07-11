@@ -1,0 +1,39 @@
+{%load static%}
+<html>
+<head>
+	<title>Booking App</title>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Orbitron">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="{%static 'css/style.css'%}">
+</head>
+<body>
+	<header class="header">
+	<div class="header__logobox">
+		<img src="{%static 'Img/logo.png'%}" class="header__logo" >
+	</div>
+	
+	<div class="header__menu hide">
+		<div class="header__menu_content">
+		
+
+		<ul>
+			<li>
+				<a href="{%url 'listSlotes'%}" class="header__menu_content_text">Book Slote</a>
+			</li>
+			<li>
+				
+				<a href="{%url 'cancelBooking'%}" class="header__menu_content_text">Cancel Slote</a>
+			</li>
+		</ul>
+		</div>
+		
+	</div>
+	<button class="header__menu_btn" ></button>
+	{%block content%}
+	{%endblock content%}
+</header>
+
+<script type="text/javascript" src="{%static 'js/app.js'%}"></script>
+
+</body>
+</html>

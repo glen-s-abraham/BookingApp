@@ -1,28 +1,44 @@
+
+{%extends 'base.html'%}
+
+{%block content%}
+<div class="form__container">
+		<h1 class="form__title">Book Slote</h1>
+		<div class="form__content">
 <form action="{%url 'listSlotes'%}" method="get">
-	Select a date to see Availability
-	<input type="date" name="date" required>
-	<input type="submit" name="Find" value="Find">
+	
+	<input type="date" name="date" class="form__date_input"required>
+	<button type="submit" class="btn btn__search" name="Find"><i class="fa fa-search"></i></button>
 </form>
 <br><br><br>
 <form action="{%url 'listSlotes'%}" method="post">
 	{%csrf_token%}
-	Time Slote
-	<select name="slote" required>
+	<label class="form__content_label">
+	Slote
+	</label>
+	<select name="slote" class="form__select_input"required>
 	{%for slote in slotes%}
 		<option value={{slote.id}}>{{slote}}</option>
 
 	{%endfor%}	
 	</select>
-	Book On
-	<input type="date" name="bdate" value="{{date}}" required readonly>
+	<label class="form__content_label">
+	Date			
+	</label>
+	<input type="date" name="bdate" value="{{date}}" class="form__text_input" required readonly>
+	<label class="form__content_label">
 	Name
-	<input type="text" name="name" required>
+	</label>
+	<input type="text" name="name" class="form__text_input" required>
+	<label class="form__content_label">
 	Contact
-	<input type="text" name="contact" required>
-	<input type="submit" name="Book" value="Book">
+	</label>
+	<input type="mail" name="contact" class="form__text_input" required>
+	<input type="submit" name="Book" value="Book" class="btn btn__submit">
 
 
 </form>
-{%if booking_id%}
-<h5>Youre Booking id is:{{booking_id}}</h5>
-{%endif%}
+
+</div>
+</div>
+{%endblock content %}

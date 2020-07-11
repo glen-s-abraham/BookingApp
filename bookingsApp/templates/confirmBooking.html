@@ -1,10 +1,24 @@
-{%if msg%}
-{{msg}}
-{%endif%}
+{%extends 'base.html'%}
+
+{%block content%}
+
+<div class="form__container">
+<h1 class="form__title">Enter OTP</h1>
+<div class="form__content">
 <form method="post">
 	{%csrf_token%}
+	{%if msg%}
+	<label class="msg">
+	{{msg}}
+	</label>
+	{%endif%}
 	<input type="hidden" name="id" value="{{id}}">
+	<label class="form__content_label">
 	otp
-	<input type="text" name="otp" required>
-	<input type="submit" name="Confirmation">
+	</label>
+	<input type="text" name="otp" class="form__select_input" required>
+	<input type="submit" name="Confirmation" class="btn btn__submit">
 </form>
+</div>
+</div>
+{%endblock content%}

@@ -1,6 +1,18 @@
+{%extends 'base.html'%}
+
+{%block content%}
+
+<div class="form__container">
+<h1 class="form__title">Cancel Booking</h1>
+<div class="form__content">
 <form action="{%url 'cancelBooking'%}" method="post">
 	{%csrf_token%}
-	Enter Booking ID
-	<input type="text" name="id">
-	<input type="submit" name="Cancel" value="CancelBooking">
+	<label class="form__content_label">
+	ID
+	</label>
+	<input type="text" name="id" class="form__select_input">
+	<input type="submit" name="Cancel"  class="btn btn__submit" value="CancelBooking">
 </form>
+</div>
+</div>
+{%endblock content%}
