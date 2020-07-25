@@ -25,7 +25,7 @@ SECRET_KEY = 'k^9rdha+4y=g#p-pjv*lmx=l5wogmm6*kl_^eybz=*jwt5^=qw'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.1.6','localhost']
 
 
 # Application definition
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bookingsApp.apps.BookingsappConfig',
+    
     
 ]
 
@@ -125,4 +126,10 @@ STATICFILES_DIRS=[
 ]
 
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'bookingapp69@gmail.com'
+EMAIL_HOST_PASSWORD ="b00k1ngApp!123#"
+

@@ -118,19 +118,29 @@ def successRegistration(request,id=-1):
 	if id>0:
 		user=Bookings.objects.get(pk=id)
 		return render(request,'successRegistration.html',{'name':user.name})
+
 def cancelBooking(request):
+	msg=""
 	if request.method=='POST':
+		
 		if 'Cancel' in request.POST:
 			bookingid=request.POST['id']
 			print(bookingid)
 			try:
 				booking=Bookings.objects.get(pk=bookingid)
+				id=booking.id
 				booking.delete()
-				return redirect('listSlotes')
+				return redirect('successCancelation',id)
 			except:
-				return redirect('listSlotes')
+				msg="Invalid id"
 				
-	return render(request,'cancelBooking.html')
+				
+	return render(request,'cancelBooking.html',{'msg':msg})
+
+def successCancelation(request,id=-1):
+	if id>0:
+		
+		return render(request,'successCancelation.html')	
 
 
 

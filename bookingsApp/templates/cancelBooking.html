@@ -5,6 +5,11 @@
 <div class="form__container">
 <h1 class="form__title">Cancel Booking</h1>
 <div class="form__content">
+	{%if msg%}
+	<label class="msg">
+	{{msg}}
+	</label>
+	{%endif%}
 <form action="{%url 'cancelBooking'%}" method="post">
 	{%csrf_token%}
 	<label class="form__content_label">

@@ -21,6 +21,7 @@ urlpatterns = [
     path('',views.listSlotes,name='listSlotes'),
     path('confirmBooking/<int:id>',views.confirmBooking,name='confirmBooking'),
     path('successRegistration/<int:id>',views.successRegistration,name='successRegistration'),
+    path('successCancelation/<int:id>',views.successCancelation,name='successCancelation'),
     path('cancelBooking/',views.cancelBooking,name='cancelBooking'),
     
 ]
